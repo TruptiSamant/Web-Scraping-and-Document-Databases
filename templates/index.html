@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class ="row">
+      <div class="col col-md-8 col-sm-12">
+          <article class="description-content">
+              <h1>Summary: Latitude Vs X </h1>
+              <div id="chart-div">
+                    {{temp_div|safe}}
+              </div>
+
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos eaque hic inventore doloremque quos assumenda dignissimos consequatur similique sapiente quam. Ad, natus! Debitis odio atque, modi sed incidunt ipsa qui.</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam fuga at qui sint maxime, rerum cupiditate aliquid id, quam earum ab fugit nulla perspiciatis. Similique quo esse dolor autem quisquam.</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi deserunt amet at vitae eaque beatae, alias, quis tenetur temporibus officiis qui ad est, eum molestias magni voluptatem doloribus laborum veniam.</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos a suscipit pariatur id. Possimus pariatur ipsam minima laudantium a debitis eveniet. Accusantium consequuntur pariatur ea vitae nulla eaque quasi laboriosam.</p>
+         </article>
+          </div>
+      <div class="col col-md-4 col-sm-12">
+          <article class="description-content">
+              <h1>Visualizations </h1>
+                  <div class="row" id = "landing-viz">
+                      <div class="col col-md-6">
+                          <img src="{{url_for('static', filename='assets/images/Fig1.png')}}" class="img-fluid" alt="max temp Image">
+                          <img src="{{url_for('static', filename='assets/images/Fig2.png')}}" class="img-fluid" alt="max temp Image">
+                      </div>
+                      <div class="col col-md-6">
+                            <img src="{{url_for('static', filename='assets/images/Fig3.png')}}" class="img-fluid" alt="max temp Image">
+                            <img src="{{url_for('static', filename='assets/images/Fig4.png')}}" class="img-fluid" alt="max temp Image">
+                      </div>
+              </div>
+          </article>
+      </div>
+  </div>
+</div>
+
+{% endblock %}
