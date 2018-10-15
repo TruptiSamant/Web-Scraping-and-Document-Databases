@@ -1,36 +1,67 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-  <div class ="row">
-      <div class="col col-md-8 col-sm-12">
-          <article class="description-content">
-              <h1>Summary: Latitude Vs X </h1>
-              <div id="chart-div">
-                    {{temp_div|safe}}
-              </div>
 
-              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos eaque hic inventore doloremque quos assumenda dignissimos consequatur similique sapiente quam. Ad, natus! Debitis odio atque, modi sed incidunt ipsa qui.</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam fuga at qui sint maxime, rerum cupiditate aliquid id, quam earum ab fugit nulla perspiciatis. Similique quo esse dolor autem quisquam.</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi deserunt amet at vitae eaque beatae, alias, quis tenetur temporibus officiis qui ad est, eum molestias magni voluptatem doloribus laborum veniam.</p>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos a suscipit pariatur id. Possimus pariatur ipsam minima laudantium a debitis eveniet. Accusantium consequuntur pariatur ea vitae nulla eaque quasi laboriosam.</p>
-         </article>
-          </div>
-      <div class="col col-md-4 col-sm-12">
-          <article class="description-content">
-              <h1>Visualizations </h1>
-                  <div class="row" id = "landing-viz">
-                      <div class="col col-md-6">
-                          <img src="{{url_for('static', filename='assets/images/Fig1.png')}}" class="img-fluid" alt="max temp Image">
-                          <img src="{{url_for('static', filename='assets/images/Fig2.png')}}" class="img-fluid" alt="max temp Image">
-                      </div>
-                      <div class="col col-md-6">
-                            <img src="{{url_for('static', filename='assets/images/Fig3.png')}}" class="img-fluid" alt="max temp Image">
-                            <img src="{{url_for('static', filename='assets/images/Fig4.png')}}" class="img-fluid" alt="max temp Image">
-                      </div>
-              </div>
-          </article>
-      </div>
-  </div>
+<div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">Mission to Mars</h1>
+      <p class="text-center"><a class="btn btn-primary btn-lg" href="{{ url_for('scrape') }}" role="button">Scrape New Data</a></p>
+    </div>
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+            <p id="note" class="text-center">{{text}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div id="head-line" class="col col-lg-12 col-md-12 col-sm-12">
+            <p><h2><u>Latest News</u></h2></p>
+            <p><h4>{{result.news_title}}</h4></p>
+            <p><h6>{{result.news_P}}<h6></p>
+        </div>
+    </div>
+    <div class="row">
+        <div id="head-line" class="col col-lg-8 col-md-8 col-sm-12">
+            <p><h2><u>Featured Mars image</u></h2></p>
+            <img class="img-fluid" src="{{result.featured_image_url}}" alt="Featured Mars image">
+        </div>
+        <div class="col col-lg-4 col-md-4 col-sm-12">
+            <div class="row">
+                <div  class="col col-lg-12 col-md-12 col-sm-12">
+                    <div id="weather">
+                        <h3>Current Weather on Mars</h3>
+                        <p>{{result.mars_weather}}</p>
+                    </div>
+                    <div  class="col col-lg-12 col-md-12 col-sm-12" style="padding-top: 10px;">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th>Description</th>
+                                <th>Value</th>
+                              </tr>
+                            </thead>
+                            {% for key, value in result.mars_facts_df.items() %}
+                            <tr>
+                                <th> {{ key }} </th>
+                                <td> {{ value }} </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12">
+            <p class="text-center"><h3>Mars Hemispheres</h3></p>
+        </div>
+            {% for url in result.hemisphere_image_urls %}
+                <div id="hemispheres" class="col col-lg-6 col-md-6 col-sm-12">
+                    <img class="img-fluid" src="{{url.image_url}}" alt="Mars Hemispheres">
+                    <h4 class="text-center">{{url.title}}</h4>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 
 {% endblock %}

@@ -47,12 +47,19 @@ class MissionMars:
         -------
         type
             Description of returned object.
+            //*[@id="page"]/section[3]/div/ul/li[8]/a/div/div[2]/img
+            //*[@id="page"]/section[3]/div/ul/li[8]/a
         """
         try:
             self.browser.visit(url)
-            image_href = self.browser.find_by_xpath('//*[@id="page"]/section[3]/div/ul/li[1]/a')["data-fancybox-href"]
-            browser_url = self.browser.url.split('/')
-            image_url = browser_url[0] + '//' + browser_url[1] + '/' + browser_url[2] + image_href
+            soup = BeautifulSoup(self.browser.html, 'lxml')
+            a=soup.find('ul', {'class':'articles'})
+            # print(a)
+            image_href = a.find('div', {'class':'img'}).find('img')['src']
+            print(f'image_href: {image_href}')
+            # image_href = self.browser.find_by_xpath('//*[@id="page"]/section[3]/div/ul/li[1]/a')["data-fancybox-href"]
+            # browser_url = self.browser.url.split('/')
+            image_url = 'https://www.jpl.nasa.gov' + image_href
             return image_url
         except:
             print (f"Error getting: {url}")
@@ -111,8 +118,9 @@ class MissionMars:
         self.browser.visit(url)
 
         try:
-            image_urls = self.browser.find_by_xpath('//*[@id="product-section"]/div[2]')
-            titles = [i.html for i in image_urls.find_by_tag('h3')]
+            soup = BeautifulSoup(self.browser.html, 'lxml')
+            image_urls = soup.find_all('div', {'class':'collapsible results'})
+            titles= [x.text for x in image_urls[0].find_all('h3')]
         except exceptions.ElementDoesNotExist:
             print(f"ElementDoesNotExist: Please check the commention {browser.url}")
 
@@ -120,11 +128,14 @@ class MissionMars:
         hemisphere_image_urls = []
         for title in titles:
             try:
-                self.browser.click_link_by_partial_text(title)
-                image_url = self.browser.find_by_xpath('//*[@id="wide-image"]/div/ul/li[2]')
-                image = image_url.find_by_tag('a')['href']
-                hemisphere_image_urls.append(dict({'title': title, 'image_url': image }))
+                self.browser.click_link_by_partial_text(title.split(' ')[0])
+                soup = BeautifulSoup(self.browser.html, 'lxml')
+                image_url = soup.find('div', {'class':'downloads'}).find('li').find('a')['href']
+                hemisphere_image_urls.append(dict({'title': title, 'image_url': image_url }))
                 self.browser.back()
             except exceptions.ElementDoesNotExist:
                 print(f"ElementDoesNotExist: Please check the commention {self.browser.url}")
         return hemisphere_image_urls
+
+# m = MissionMars('chrome')
+# print(m.get_mars_hemispheres('https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'))

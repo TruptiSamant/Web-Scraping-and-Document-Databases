@@ -1,0 +1,28 @@
+.display-4 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    color: #e06c17;
+}
+
+#note {
+        color: red;
+}
+
+#weather {
+    width: 320px;
+    padding: 10px;
+    border: 1px solid gray;
+    margin: 0;
+}
+
+#hemispheres{
+    border: 1px solid gray;
+    padding: 10px;
+}
+
+.table td, .table th {
+    padding: 0;
+    border-top: 1px solid #dee2e6;
+}
